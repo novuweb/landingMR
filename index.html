@@ -560,6 +560,7 @@
     }
     .waitlist-form input::placeholder { color: rgba(255,255,255,.35); }
     .waitlist-form .btn-primary { flex-shrink: 0; padding: 14px 24px; font-size: 14.5px; }
+    .form-hook { font-family: 'Poppins', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--green); margin-bottom: 14px; letter-spacing: 0.01em; }
 
     .success-msg {
       display: none;
@@ -641,10 +642,19 @@
     <span class="chip">Desafíos directos</span>
   </div>
 
-  <div class="hero-cta-wrap">
-    <button class="btn-primary" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">
-      Quiero ser el primero
-    </button>
+  <div class="hero-cta-wrap" id="waitlist-top" style="flex-direction:column;">
+    <div class="form-hook">Sé de los primeros en tu ciudad</div>
+    <form class="waitlist-form" id="waitlist-form-top" onsubmit="submitWaitlist(event)">
+      <input type="email" id="email-input-top" placeholder="tu@email.com" required autocomplete="email" />
+      <button type="submit" class="btn-primary">Quiero ser el primero</button>
+    </form>
+    <div class="success-msg" id="success-msg-top">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>
+      </div>
+      <h3>¡Ya estás dentro!</h3>
+      <p>Te avisamos el 27 de julio de 2026.<br/>Prepara la raqueta.</p>
+    </div>
     <span class="waiting-count">+1.200 jugadores en lista de espera</span>
   </div>
 </section>
@@ -853,9 +863,37 @@
 </section>
 
 <!-- ====================================================
-     3. FORMULARIO LISTA DE ESPERA
+     3. FORMULARIO LISTA DE ESPERA (MEDIO)
+==================================================== -->
+<section class="waitlist-section" id="waitlist-mid">
+  <div class="form-hook">¿Te gusta lo que ves? Apúntate a la lista de espera</div>
+  <div class="section-label">App en desarrollo</div>
+  <h2>Únete a la lista de espera</h2>
+  <p class="desc">La app llega el <strong style="color:var(--white)">27 de julio de 2026</strong>. Sé de los primeros en pisar la pista — sin spam, prometido.</p>
+
+  <form class="waitlist-form" id="waitlist-form-mid" onsubmit="submitWaitlist(event)">
+    <input type="email" id="email-input-mid" placeholder="tu@email.com" required autocomplete="email" />
+    <button type="submit" class="btn-primary">Únete a la lista de espera</button>
+  </form>
+
+  <div class="success-msg" id="success-msg-mid">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>
+    </div>
+    <h3>¡Ya estás dentro!</h3>
+    <p>Te avisamos el 27 de julio de 2026.<br/>Prepara la raqueta.</p>
+  </div>
+
+  <div class="inscribed-count" id="inscribed-count-mid" style="display:none">
+    <strong id="count-num-mid">--</strong> jugadores ya están en la lista de espera
+  </div>
+</section>
+
+<!-- ====================================================
+     4. FORMULARIO LISTA DE ESPERA (FINAL)
 ==================================================== -->
 <section class="waitlist-section" id="waitlist">
+  <div class="form-hook">No te quedes fuera. Disponible el 27 de julio</div>
   <div class="section-label">App en desarrollo</div>
   <h2>Únete a la lista de espera</h2>
   <p class="desc">La app llega el <strong style="color:var(--white)">27 de julio de 2026</strong>. Sé de los primeros en pisar la pista — sin spam, prometido.</p>
@@ -1241,10 +1279,12 @@
   // ──────────────────────────────────────────────────
   async function submitWaitlist(e) {
     e.preventDefault();
-    const email = document.getElementById('email-input').value.trim();
+    const form = e.target;
+    const wrap = form.closest('.waitlist-section') || form.closest('.hero-cta-wrap');
+    const email = form.querySelector('input[type=email]').value.trim();
     if (!email) return;
 
-    const btn = e.target.querySelector('button[type=submit]');
+    const btn = form.querySelector('button[type=submit]');
     btn.disabled = true;
     btn.textContent = 'Enviando…';
 
@@ -1283,16 +1323,19 @@
       } catch(err) { console.warn('Brevo error:', err); }
     }
 
-    document.getElementById('waitlist-form').style.display = 'none';
-    document.getElementById('success-msg').classList.add('show');
+    form.style.display = 'none';
+    const successMsg = wrap.querySelector('.success-msg');
+    if (successMsg) successMsg.classList.add('show');
     playAcceptSound();
 
-    const countEl = document.getElementById('inscribed-count');
-    const numEl   = document.getElementById('count-num');
-    countEl.style.display = '';
-    let n = 1200 + Math.floor(Math.random() * 40);
-    numEl.textContent = n.toLocaleString('es');
-    setTimeout(() => { numEl.textContent = (++n).toLocaleString('es'); }, 2000);
+    const countEl = wrap.querySelector('.inscribed-count');
+    const numEl   = wrap.querySelector('.inscribed-count strong');
+    if (countEl && numEl) {
+      countEl.style.display = '';
+      let n = 1200 + Math.floor(Math.random() * 40);
+      numEl.textContent = n.toLocaleString('es');
+      setTimeout(() => { numEl.textContent = (++n).toLocaleString('es'); }, 2000);
+    }
   }
 
   // ──────────────────────────────────────────────────
