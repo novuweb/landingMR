@@ -540,27 +540,28 @@
       margin-bottom: 40px;
     }
     .waitlist-form {
-      display: flex; align-items: center; gap: 10px;
-      width: 100%; max-width: 460px;
-      padding: 6px 6px 6px 20px;
+      display: flex; align-items: center; gap: 12px;
+      width: 100%; max-width: 560px;
+      padding: 8px 8px 8px 26px;
       background: rgba(255,255,255,.04);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 22px;
       flex-wrap: wrap;
     }
     .waitlist-form input {
-      flex: 1; min-width: 160px;
+      flex: 1; min-width: 200px;
       background: transparent;
       border: none;
       color: var(--white);
-      font-size: 14.5px;
+      font-size: 18px;
       font-family: 'Poppins', sans-serif;
       outline: none;
-      padding: 14px 0;
+      padding: 20px 0;
     }
     .waitlist-form input::placeholder { color: rgba(255,255,255,.35); }
-    .waitlist-form .btn-primary { flex-shrink: 0; padding: 14px 24px; font-size: 14.5px; }
-    .form-hook { font-family: 'Poppins', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--green); margin-bottom: 14px; letter-spacing: 0.01em; }
+    .waitlist-form .btn-primary { flex-shrink: 0; padding: 18px 30px; font-size: 16px; }
+    .form-hook { font-family: 'Poppins', sans-serif; font-size: clamp(1.4rem, 3.2vw, 2rem); font-weight: 700; color: var(--white); margin-bottom: 18px; letter-spacing: 0.01em; line-height: 1.2; }
+    .form-hook span { color: var(--green); }
 
     .success-msg {
       display: none;
@@ -643,7 +644,7 @@
   </div>
 
   <div class="hero-cta-wrap" id="waitlist-top" style="flex-direction:column;">
-    <div class="form-hook">Sé de los primeros en tu ciudad</div>
+    <div class="form-hook">Apúntate a la <span>lista de espera</span></div>
     <form class="waitlist-form" id="waitlist-form-top" onsubmit="submitWaitlist(event)">
       <input type="email" id="email-input-top" placeholder="tu@email.com" required autocomplete="email" />
       <button type="submit" class="btn-primary">Quiero ser el primero</button>
@@ -866,7 +867,7 @@
      3. FORMULARIO LISTA DE ESPERA (MEDIO)
 ==================================================== -->
 <section class="waitlist-section" id="waitlist-mid">
-  <div class="form-hook">¿Te gusta lo que ves? Apúntate a la lista de espera</div>
+  <div class="form-hook">Apúntate a la <span>lista de espera</span></div>
   <div class="section-label">App en desarrollo</div>
   <h2>Únete a la lista de espera</h2>
   <p class="desc">La app llega el <strong style="color:var(--white)">27 de julio de 2026</strong>. Sé de los primeros en pisar la pista — sin spam, prometido.</p>
@@ -893,7 +894,7 @@
      4. FORMULARIO LISTA DE ESPERA (FINAL)
 ==================================================== -->
 <section class="waitlist-section" id="waitlist">
-  <div class="form-hook">No te quedes fuera. Disponible el 27 de julio</div>
+  <div class="form-hook">Apúntate a la <span>lista de espera</span></div>
   <div class="section-label">App en desarrollo</div>
   <h2>Únete a la lista de espera</h2>
   <p class="desc">La app llega el <strong style="color:var(--white)">27 de julio de 2026</strong>. Sé de los primeros en pisar la pista — sin spam, prometido.</p>
